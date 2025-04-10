@@ -278,9 +278,12 @@ echo -e "Package: *\nPin: origin nginx.org\nPin-Priority: 900" \
 sudo apt update -y
 sudo apt install nginx -y
 
-# config nginx for 
+# config nginx for Odoo
+# create nginx config folder
+sudo mkdir -p $ODOO_DIR/nginx/sites-enabled
+sudo sed -i "/include \/etc\/nginx\/conf\.d\/\*\.conf;/a include $ODOO_DIR/nginx/sites-enabled/*.conf;" /etc/nginx/nginx.conf
 
-sudo tee /etc/nginx/sites-available/odoo18.conf > /dev/null <<EOF
+sudo tee $ODOO_DIR/nginx/sites-enabled/odoo18.conf > /dev/null <<EOF
 upstream odoo_server {
     server 127.0.0.1:8069;
 }
@@ -355,8 +358,6 @@ server {
     gzip on;
 }
 EOF
-
-sudo ln -s /etc/nginx/sites-available/odoo18.conf /etc/nginx/sites-enabled/odoo18.conf
 
 sudo nginx -t
 sudo nginx -s reload
