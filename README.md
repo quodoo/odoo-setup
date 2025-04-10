@@ -49,12 +49,12 @@ $ODOO_DIR/
 
 1. Make the script executable:
 ```bash
-chmod +x odoo18_install.sh
+sudo chmod +x odoo17-setup.sh
 ```
 
 2. Run the script:
 ```bash
-./odoo18_install.sh
+sudo ./odoo17-setup.sh
 ```
 
 ## Services and Ports
