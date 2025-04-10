@@ -76,7 +76,7 @@ tar -xf Python-3.10.12.tgz
   --with-ensurepip=install \
   --prefix=$ODOO_DIR/python3.10
 
-# Now initiate the Python 3.12 build process:
+# Now initiate the Python 3.10 build process:
 # Remember, the (-j) corresponds to the number of cores in your system to speed up the build time
 sudo make -j 4
 
@@ -87,8 +87,8 @@ sudo chown -R ubuntu:ubuntu $ODOO_DIR/python3.10
 $ODOO_DIR/python3.10/bin/python3.10 --version
 
 # ------------------------------------------------------------------------------
-# Add the custom Python 3.12 binary path to the system PATH
-# This allows you to run `python3.10`, `pip3.12`, or any installed CLI tools
+# Add the custom Python 3.10 binary path to the system PATH
+# This allows you to run `python3.10` or any installed CLI tools
 # from that directory without needing to type the full path
 # (e.g. /efs/odoo/python3.10/bin/python3.10)
 # ------------------------------------------------------------------------------
@@ -120,7 +120,7 @@ sudo apt update -y
 
 sudo apt install postgresql-client-16 -y
 PG_PATH=/usr/lib/postgresql/16/bin 
-# Install PostgreSQL 16 If you want to install PostgreSQL 15 on your server, you can do so by running the following command:
+# Install PostgreSQL 16 If you want to install PostgreSQL on your server, you can do so by running the following command:
 # 1. Import the LLVM GPG key
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm.gpg
 
