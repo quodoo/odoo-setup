@@ -7,7 +7,7 @@ DB_PASSWORD=password
 DB_HOST=localhost
 DB_PORT=5432
 
-# Read the documentation for the installation of Odoo 18 
+# Read the documentation for the installation of Odoo 18.0
 # https://www.odoo.com/documentation/18.0/administration/on_premise/source.html
 # Update Server
 sudo apt update -y
@@ -20,12 +20,13 @@ sudo apt update -y
 # sudo apt install -y python3-pip
 
 # Use the methods below to install web dependencies and packages. Verify that every package has been installed correctly and without any problems.
-# libsasl2-dev for python-ldap
+# libldap2-dev libsasl2-dev for python-ldap
 sudo apt install -y \
     build-essential \
     zlib1g-dev \
     libncurses5-dev \
     libgdbm-dev \
+    libldap2-dev \
     libsasl2-dev \
     libnss3-dev \
     libssl-dev \
@@ -41,6 +42,7 @@ sudo apt install -y \
     libxext-dev \
     libxrender-dev \
     libxt-dev \
+    libpq-dev \
     libpng-dev \
     libcairo2 \
     libcairo2-dev \
@@ -99,6 +101,7 @@ $ODOO_DIR/python3.12/bin/python3.12 -m pip install --upgrade pip
 
 $ODOO_DIR/python3.12/bin/python3.12 -m pip install setuptools wheel cython rlPyCairo
 
+
 # Install nodejs & npm
 cd $ODOO_DIR/
 curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -147,10 +150,8 @@ mkdir $ODOO_DIR/odoo18/
 sudo apt install git -y
 git clone https://github.com/odoo/odoo.git --depth 1 --branch 18.0 $ODOO_DIR/odoo18/
 
-# Install Required Python Packages
 # Install Odoo Requirements
-cd $ODOO_DIR/odoo18/
-$ODOO_DIR/python3.12/bin/python3.12 -m pip install -r requirements.txt
+$ODOO_DIR/python3.12/bin/python3.12 -m pip install -r $ODOO_DIR/odoo18/requirements.txt
 
 # Install fonts for Odoo reports
 # support for Japanese & Vietnamese 
@@ -228,7 +229,7 @@ EOF
 
 sudo tee /etc/systemd/system/odoo18.service > /dev/null <<EOF
 [Unit]
-Description=Odoo18
+Description=odoo18
 After=network.target
 
 [Service]
@@ -276,6 +277,7 @@ echo -e "Package: *\nPin: origin nginx.org\nPin-Priority: 900" \
 
 sudo apt update -y
 sudo apt install nginx -y
+
 # config nginx for 
 
 sudo tee /etc/nginx/sites-available/odoo18.conf > /dev/null <<EOF
@@ -359,4 +361,4 @@ sudo ln -s /etc/nginx/sites-available/odoo18.conf /etc/nginx/sites-enabled/odoo1
 sudo nginx -t
 sudo nginx -s reload
 
-# Go to http://localhost
+curl http://localhost
