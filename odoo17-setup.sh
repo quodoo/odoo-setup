@@ -53,6 +53,7 @@ sudo apt install -y \
 # install python environment
 # install python3.10 from source 
 mkdir $ODOO_DIR
+sudo chown -R ubuntu:ubuntu $ODOO_DIR
 cd $ODOO_DIR
 
 # ------------------------------------------------------------------------------
