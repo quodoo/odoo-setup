@@ -120,7 +120,7 @@ sudo apt update -y
 
 sudo apt install postgresql-client-16 -y
 PG_PATH=/usr/lib/postgresql/16/bin 
-# Install PostgreSQL 16 If you want to install PostgreSQL 15 on your server, you can do so by running the following command:
+# Install PostgreSQL 16 If you want to install PostgreSQL on your server, you can do so by running the following command:
 # 1. Import the LLVM GPG key
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm.gpg
 
