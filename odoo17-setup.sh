@@ -90,7 +90,7 @@ $ODOO_DIR/python3.10/bin/python3.10 --version
 
 # ------------------------------------------------------------------------------
 # Add the custom Python 3.10 binary path to the system PATH
-# This allows you to run `python3.10`, `pip3.12`, or any installed CLI tools
+# This allows you to run `python3.10`, or any installed CLI tools
 # from that directory without needing to type the full path
 # (e.g. /efs/odoo/python3.10/bin/python3.10)
 # ------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ sudo apt update -y
 
 sudo apt install postgresql-client-16 -y
 PG_PATH=/usr/lib/postgresql/16/bin 
-# Install PostgreSQL 16 If you want to install PostgreSQL 15 on your server, you can do so by running the following command:
+# Install PostgreSQL 16 If you want to install PostgreSQL on your server, you can do so by running the following command:
 # 1. Import the LLVM GPG key
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm.gpg
 
@@ -266,7 +266,25 @@ sudo systemctl start odoo17
 # Go to http://localhost:8069
 
 # Install Nginx and Configure
-sudo apt install nginx-core -y
+# Install dependencies
+sudo apt install curl gnupg2 ca-certificates lsb-release ubuntu-keyring -y
+
+# Add Nginx signing key
+curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+  | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+
+# Set up the stable repository
+echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] \
+http://nginx.org/packages/ubuntu $(lsb_release -cs) nginx" \
+  | sudo tee /etc/apt/sources.list.d/nginx.list
+
+# Pin the official repo to take priority over Ubuntu default
+echo -e "Package: *\nPin: origin nginx.org\nPin-Priority: 900" \
+  | sudo tee /etc/apt/preferences.d/99nginx
+
+sudo apt update -y
+sudo apt install nginx -y
+
 # config nginx for 
 
 sudo tee /etc/nginx/sites-available/odoo17.conf > /dev/null <<EOF
