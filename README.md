@@ -1,6 +1,6 @@
-# Odoo 17 Installation Script
+# Odoo 18 Installation Script
 
-This script provides an automated installation of Odoo 17 on Ubuntu with Python 3.10, PostgreSQL 16, and Nginx.
+This script provides an automated installation of Odoo 18 on Ubuntu with Python 3.12, PostgreSQL 16, and Nginx.
 
 ## Prerequisites
 
@@ -22,10 +22,10 @@ DB_PORT=5432                  # Database port
 
 ## What the Script Installs
 
-- Python 3.10.15 from source
+- Python 3.12 from source
 - Node.js 18.20.0
 - PostgreSQL 16
-- Odoo 17.0 from GitHub
+- Odoo 18.0 from GitHub
 - Nginx as reverse proxy
 - Wkhtmltopdf 0.12.6.1-3
 
@@ -33,9 +33,9 @@ DB_PORT=5432                  # Database port
 
 ```
 $ODOO_DIR/
-├── python3.10/              # Python installation
+├── python3.12/              # Python installation
 ├── node-v18/               # Node.js installation
-├── odoo17/                 # Odoo installation
+├── odoo18/                 # Odoo installation
 │   ├── config/             # Odoo configuration
 │   ├── logs/              # Log files
 │   └── addons/            # Odoo addons
@@ -49,12 +49,12 @@ $ODOO_DIR/
 
 1. Make the script executable:
 ```bash
-chmod +x odoo18_install.sh
+chmod +x odoo18-setup.sh
 ```
 
 2. Run the script:
 ```bash
-./odoo18_install.sh
+./odoo18-setup.sh
 ```
 
 ## Services and Ports
@@ -67,12 +67,12 @@ chmod +x odoo18_install.sh
 ## System Services
 
 The script creates and enables the following system service:
-- `odoo17.service`: Manages the Odoo server process
+- `odoo18.service`: Manages the Odoo server process
 
 ## Default Configurations
 
 - Admin Password: mysupersecretpassword
-- Database Name: odoo17
+- Database Name: odoo18
 - Workers: 3
 - Max Cron Threads: 1
 - Memory Limits:
@@ -83,13 +83,13 @@ The script creates and enables the following system service:
 
 ```bash
 # Check Odoo service status
-sudo systemctl status odoo17
+sudo systemctl status odoo18
 
 # Restart Odoo service
-sudo systemctl restart odoo17
+sudo systemctl restart odoo18
 
 # View Odoo logs
-tail -f $ODOO_DIR/odoo17/logs/odoo.log
+tail -f $ODOO_DIR/logs/odoo.log
 
 # Check Nginx configuration
 sudo nginx -t
@@ -109,5 +109,5 @@ sudo nginx -s reload
 ## Support
 
 For issues and questions, please refer to:
-- [Odoo Documentation](https://www.odoo.com/documentation/17.0/)
+- [Odoo Documentation](https://www.odoo.com/documentation/18.0/)
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/16/index.html)
