@@ -194,7 +194,7 @@ db_user = $DB_USER
 db_password = $DB_PASSWORD
 db_maxconn = 32
 pg_path = $PG_PATH
-
+data_dir = $DATA_DIR
 addons_path = $CUSTOM_ADDONS_PATH
 dbfilter = .*
 db_name = False
