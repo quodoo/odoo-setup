@@ -6,6 +6,7 @@ DB_USER=odoo
 DB_PASSWORD=password
 DB_HOST=localhost
 DB_PORT=5432
+SERVICE_NAME=odoo18
 
 # Read the documentation for the installation of Odoo 18.0
 # https://www.odoo.com/documentation/18.0/administration/on_premise/source.html
@@ -184,7 +185,7 @@ mkdir $DATA_DIR
 mkdir $LOG_DIR
 mkdir $CONF_DIR
 
-sudo tee $CONF_DIR/odoo.conf > /dev/null <<EOF
+sudo tee $CONF_DIR/$SERVICE_NAME.conf > /dev/null <<EOF
 [options]
 ; This is the password that allows database operations:
 admin_passwd = $ADMIN_PASSWORD
@@ -228,19 +229,19 @@ EOF
 # Requires=postgresql.service
 # After=network.target postgresql.service
 
-sudo tee /etc/systemd/system/odoo18.service > /dev/null <<EOF
+sudo tee /etc/systemd/system/$SERVICE_NAME.service > /dev/null <<EOF
 [Unit]
-Description=odoo18
+Description=$SERVICE_NAME
 After=network.target
 
 [Service]
 Environment=PATH=/usr/local/bin:/usr/bin:/bin:/sbin
 Type=simple
-SyslogIdentifier=odoo18
+SyslogIdentifier=$SERVICE_NAME
 PermissionsStartOnly=true
 User=ubuntu
 Group=ubuntu
-ExecStart=$ODOO_DIR/python3.12/bin/python3.12 $ODOO_DIR/odoo18/odoo-bin -c $CONF_DIR/odoo.conf
+ExecStart=$ODOO_DIR/python3.12/bin/python3.12 $ODOO_DIR/odoo18/odoo-bin -c $CONF_DIR/$SERVICE_NAME.conf
 
 StandardOutput=journal+console
 
@@ -250,8 +251,8 @@ EOF
 
 
 sudo systemctl daemon-reload
-sudo systemctl enable odoo18
-sudo systemctl start odoo18
+sudo systemctl enable $SERVICE_NAME
+sudo systemctl start $SERVICE_NAME
 
 # Check Odoo Service
 # sudo systemctl status odoo18
@@ -284,7 +285,7 @@ sudo apt install nginx -y
 sudo mkdir -p $ODOO_DIR/nginx/sites-enabled
 sudo sed -i "/include \/etc\/nginx\/conf\.d\/\*\.conf;/a include $ODOO_DIR/nginx/sites-enabled/*.conf;" /etc/nginx/nginx.conf
 
-sudo tee $ODOO_DIR/nginx/sites-enabled/odoo18.conf > /dev/null <<EOF
+sudo tee $ODOO_DIR/nginx/sites-enabled/$SERVICE_NAME.conf > /dev/null <<EOF
 upstream odoo_server {
     server 127.0.0.1:8069;
 }
